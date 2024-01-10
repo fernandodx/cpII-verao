@@ -9,14 +9,11 @@
 </head>
 <body>
     <div id="app">
-        <p>HELLO WORLD</p>
-        <form id="id-form">
-            <input type="text" v-model="input_name" placeholder="Nome">
-            <input type="submit" value="Enviar" v-on:click="submitForm">
-        </form>
-        <p> Meu nome: {{ name }}, idade: {{ age }}</p>
-        <p> Databing: {{ input_name }}</p>
+        <input type="text" placeholder="Digite Aqui o Nome" v-model="inputName">
+        <input type="button" value="Dar Aula" v-on:click="darAula">
+        <p>Meu nome é: {{ nome }} com a idade: {{ idade }}</p>
+        <h1>Databing Funcionando: {{ inputName }}</h1>
+   
     </div>
-    
 </body>
 </html>
