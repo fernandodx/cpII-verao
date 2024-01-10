@@ -1,7 +1,7 @@
 const myNameApp = {
     data() {
         return {
-            name: "Fernando Dias",
+            name: "Aluno",
             age: 15,
             input_name: ""
         }
