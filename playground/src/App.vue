@@ -1,16 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Meu Primeiro componente:</h1>
+    <UsuarioComponent/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import UsuarioComponent from './components/UsuarioComponent.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    UsuarioComponent
+  },
+  updated() {
+    console.log("APP -> updated")
+  },
+  mounted() {
+    console.log("APP -> mounted")
+  },
+  unmounted() {
+    console.log("APP -> unmounted")
+  },
+  errorCaptured() {
+    console.log("APP -> errorCaptured ")
+  },
+  created() {
+    console.log("APP -> created")
+  },
 }
 </script>
 
