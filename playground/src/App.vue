@@ -1,6 +1,8 @@
 <template>
   <div>
+    <EstiloComponent/>
     <h1>Meu Primeiro componente:</h1>
+    <p class="subtitulo"> Sub Titulo</p>
     <UsuarioComponent/>
   </div>
 </template>
@@ -8,11 +10,13 @@
 <script>
 
 import UsuarioComponent from './components/UsuarioComponent.vue';
+import EstiloComponent from './components/EstiloComponent.vue';
 
 export default {
   name: 'App',
   components: {
-    UsuarioComponent
+    UsuarioComponent,
+    EstiloComponent
   },
   updated() {
     console.log("APP -> updated")
@@ -40,5 +44,13 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+h1 {
+  font-weight: bold;
+  padding: 16px;
+  color: darkcyan;
+  background: lightblue;
+  border-radius: 16px;
 }
 </style>

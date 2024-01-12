@@ -2,6 +2,22 @@
     <div>
         <p>Nome: {{ nome }}</p>
         <p>Email: {{ email }}</p>
+        <hr>
+        <div v-if="ja_trabalhou">
+            <p>Profissão anterior</p>
+            <ul>
+                <li>Analista de Sistema</li>
+                <li>Programador</li>
+                <li>Estagiário</li>
+            </ul>
+        </div>
+        <div v-else>
+            <p>Open to Work</p>
+        </div>
+        <p v-show="tem_rede_social">
+            Linkedin: <a :href="url" :target="target" :alt="alt">Rede Social Clique Aqui</a>
+        </p>
+
         <cadastro-component/>
 
     </div>
@@ -19,18 +35,24 @@ import CadastroComponent from './CadastroComponent.vue'
         data() {
             return {
                 email: "fernando.dias@ifb.edu.br",
-                nome: "Laion Default"
+                nome: "Laion Default",
+                ja_trabalhou: true,
+                tem_rede_social: true,
+                url: "http://g1.com.br",
+                alt: "Minha rede solcial",
+                target: "#"
             }
         },
         created() {
-            console.log(`Tela criada -> nome: ${this.nome}`)
+            console.log(`URL ATUAL -> ${this.url}`)
         },
         mounted() {
-            console.log(`Tela Montada -> nome: ${this.nome}`)
+        
             setTimeout(() => {
-                this.nome = "Fernando";
-                console.log(`Tela Alterada -> nome: ${this.nome}`)
-            }, 2000);
+              this.url = "http://google.com.br"
+              console.log(`URL ATUAL -> ${this.url}`);
+              this.target = "_blank"
+            }, 5000);
             
         }
         
