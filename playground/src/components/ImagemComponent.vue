@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <p>Nome da imagem: {{ nomeImagem }}</p>
         <img v-show="imagemVisivel" :src="urlImg" alt="imagem banner">
         <button @click="aparece_esconde(), segundoMetodo()">Aparece/Esconde</button>
     </div>
@@ -52,8 +53,12 @@
             }
         },
         props:{
-            urlImg: String
+            urlImg: String,
+            nomeImagem: String,
         },
+        emits: [
+            "visibilidadeImg",
+        ],
         methods: {
             aparece_esconde(){
                 this.imagemVisivel = !this.imagemVisivel;
@@ -63,6 +68,7 @@
                 setTimeout(function(){
                     console.log("Segundo método chamado juntamente do click");
                 }, 2000);
+                this.$emit('visibilidadeImg', this.imagemVisivel);
             }
         }
     }

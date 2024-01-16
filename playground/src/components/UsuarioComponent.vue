@@ -6,9 +6,7 @@
         <div v-if="ja_trabalhou">
             <p>Profissão anterior</p>
             <ul>
-                <li>Analista de Sistema</li>
-                <li>Programador</li>
-                <li>Estagiário</li>
+                <li v-for="profissao in listaProfissoes" :key="profissao.id">{{ profissao.profissao }}</li>
             </ul>
         </div>
         <div v-else>
@@ -40,8 +38,13 @@ import CadastroComponent from './CadastroComponent.vue'
                 tem_rede_social: true,
                 url: "http://g1.com.br",
                 alt: "Minha rede solcial",
-                target: "#"
+                target: "#",
+                listaProfissoes: [{id: 1, profissao:"Analista de Sistemas"},
+                                  {id: 2, profissao:"Programador"},
+                                  {id: 3, profissao:"Estagiário"},
+                                  {id: 4, profissao:"Professor"}],
             }
+        
         },
         created() {
             console.log(`URL ATUAL -> ${this.url}`)
