@@ -4,6 +4,8 @@
     <h1>Meu Primeiro componente:</h1>
     <p class="subtitulo"> Sub Titulo</p>
     <UsuarioComponent/>
+    <ImagemComponent urlImg="/img/banner.png"/>
+    <ImagemComponent urlImg="/img/banner2.png"/>
   </div>
 </template>
 
@@ -11,13 +13,20 @@
 
 import UsuarioComponent from './components/UsuarioComponent.vue';
 import EstiloComponent from './components/EstiloComponent.vue';
+import ImagemComponent from './components/ImagemComponent.vue';
 
 export default {
   name: 'App',
   components: {
     UsuarioComponent,
-    EstiloComponent
-  },
+    EstiloComponent,
+    ImagemComponent
+},
+methods: {
+  trocouImagem(imagemVisivel) {
+    console.log(`FUI AVISADO ${imagemVisivel}`);
+  }
+},
   updated() {
     console.log("APP -> updated")
   },
@@ -41,7 +50,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: start;
   color: #2c3e50;
   margin-top: 60px;
 }
