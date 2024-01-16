@@ -4,8 +4,10 @@
     <h1>Meu Primeiro componente:</h1>
     <p class="subtitulo"> Sub Titulo</p>
     <UsuarioComponent/>
-    <ImagemComponent urlImg="/img/banner.png"/>
-    <ImagemComponent urlImg="/img/banner2.png"/>
+    <h1 v-show="imagemExibida">A imagem está sendo exibida</h1>
+    <ImagemComponent urlImg="/img/banner.png" :nomeImagem="banner1" @visibilidadeImg="alterouImagem"/>
+    <ImagemComponent urlImg="/img/banner2.png" :nomeImagem="banner2"/>
+
   </div>
 </template>
 
@@ -22,6 +24,24 @@ export default {
     EstiloComponent,
     ImagemComponent
 },
+  data(){
+    return {
+      banner1: "Sou banner 1",
+      banner2: "Sou banner 2",
+      imagemExibida: false
+    }
+  },
+  methods:{
+     alterouImagem(imagemExibidaFilha){
+      console.log("A imagem foi alterada via emit");
+      if (imagemExibidaFilha === true){
+        this.imagemExibida = true
+      } 
+      else{
+        this.imagemExibida = false
+      }
+     }
+  },
   updated() {
     console.log("APP -> updated")
   },
