@@ -22,11 +22,6 @@ export default {
     EstiloComponent,
     ImagemComponent
 },
-methods: {
-  trocouImagem(imagemVisivel) {
-    console.log(`FUI AVISADO ${imagemVisivel}`);
-  }
-},
   updated() {
     console.log("APP -> updated")
   },
