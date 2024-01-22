@@ -21,8 +21,10 @@ export default {
     };
   },
   mounted() {
-   console.log(this.$route.query.burguer);
- 
+   const burguerDecode = decodeURIComponent(this.$route.query.burguer);
+   const burguer = JSON.parse(burguerDecode);
+   this.hamburguerSelecionado = burguer;
+   console.log(`SUCESSO ${this.hamburguerSelecionado}`);
   },
 }
 </script>

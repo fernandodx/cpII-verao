@@ -8,10 +8,10 @@
             </p>
             <img
               id="foto-content"
-              :src="burguer && burguer.foto ? burguer.foto : ''"
+              :src="burguer && burguer.foto ? burguer.foto : '-'"
             />
           </div>
-          <mensagem-component :msg="msg" />
+        
           <div class="inputs" id="form-pedido">
             <label for="nome-cliente">Nome</label>
             <input
@@ -91,7 +91,7 @@
   export default {
     name: "PedidoComponent",
     components: { 
-        
+
      },
     data() {
       return {
@@ -134,8 +134,35 @@
           hamburguer: this.burguer,
         };
   
-      
-      }
+        const dadosPedidoJson = JSON.stringify(dadosPedido);
+  
+        const req = await fetch("http://localhost:3000/pedidos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: dadosPedidoJson,
+        });
+  
+        this.msg = "Pedido realizado com sucesso!";
+        this.scrollParaMensagem();
+  
+        this.nomeCliente = null;
+        this.idPontoCarne = null;
+        this.listaBebidasSelecionadas = [];
+        this.listaComplementoSelecionado = [];
+  
+        setTimeout(() => {
+          this.msg = null;
+        }, 3000);
+      },
+      scrollParaMensagem() {
+        // Encontrar o elemento usando o ID
+        const elementoDeDestino = document.getElementById("form-pedido");
+  
+        if (elementoDeDestino) {
+          // Rolar até o elemento usando scrollIntoView
+          elementoDeDestino.scrollIntoView({ behavior: "smooth" });
+        }
+      },
     },
     mounted() {
       this.getTipoPontos();

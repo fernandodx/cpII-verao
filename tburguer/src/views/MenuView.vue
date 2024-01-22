@@ -29,7 +29,7 @@
   export default {
     name: "MenuView",
     components: {
-      BannerComponent,
+     
     },
     data() {
       return {
@@ -45,9 +45,7 @@
       selecionarBurguer(burguerSelecionado) {
         const param = JSON.stringify(burguerSelecionado);
         const burguerJsonEncode = encodeURIComponent(param);
-       
-        this.$router.push({ path: 'config-pedido', query: { burguer: burguerJsonEncode } });
-
+        this.$router.push({path: '/config-pedido', query: {burguer : burguerJsonEncode}});
       },
     },
     mounted() {
