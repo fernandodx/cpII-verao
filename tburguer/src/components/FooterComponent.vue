@@ -13,8 +13,6 @@
 
 </script>
 
-
-
 <style scoped>
 
 #footer {
@@ -25,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 
 }
 
