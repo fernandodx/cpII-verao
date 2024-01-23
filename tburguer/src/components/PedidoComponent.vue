@@ -149,6 +149,8 @@
           body: dadosPedidoJson,
         });
 
+        //Limpar os campos após o cadastro do pedido
+
         this.msg = "Pedido criado com sucesso!"
 
         setTimeout(() => {
