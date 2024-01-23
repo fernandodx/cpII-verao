@@ -1,6 +1,6 @@
 <template>
     <div id="pedidos-tabela">
- 
+    <!-- Adicione o componente de mensagem ao componente de ListaPedidosComponent -->
       <div>
         <div id="pedidos-tabela-cabecalho">
           <div id="ordem-id">#ID</div>
@@ -12,7 +12,10 @@
           <div id="div-acoes">Ações</div>
         </div>
       </div>
-      <div
+
+       <!-- Quando não tiver nenhum pedido, somente o o componente de msg é exibido falando que nenhum pedido foi realizado. -->
+       <!-- Quando tiver pedido, a lista com cabeçalho é escondida -->  
+       <div
         id="pedidos-tabela-linhas"
         v-for="pedido in listaPedidosRealizados"
         :key="pedido.id"
@@ -44,7 +47,7 @@
             <select
               name="status"
               class="status"
-           
+              @change="atualizarStatusPedido($event, pedido.id)"
             >
               <option value="">Selecione</option>
               <option
@@ -63,7 +66,7 @@
               alt="Excluir"
               width="35px"
               height="35px"
-             
+              @click="deletarPedido(pedido.id)"
             />
   
             <!-- <button class="cancelar-btn" @click="deletarPedido(pedido.id)">
@@ -94,11 +97,40 @@
         const response = await fetch("http://localhost:3000/pedidos");
         this.listaPedidosRealizados = await response.json();
         console.log(this.listaPedidosRealizados);
-      }
+      },
+      async consultarListaStatus() {
+        const response = await fetch("http://localhost:3000/status_pedido");
+        this.listaStatusPedido = await response.json();
+      },
+      async deletarPedido(id) {
+        const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
+          method: "DELETE",
+        });
+  
+        //Exiba a seguinte mensagem no componente de mensagem  -> Pedido n˚${id}, foi cancelado com sucesso!
+        //Faça ele desaparecer depois de 3 segundos
+  
+        this.consultarPedidos();
+      },
+      async atualizarStatusPedido(event, id) {
+        const idPedidoAtualizado = event.target.value;
+  
+        const body = JSON.stringify({ statusId: idPedidoAtualizado });
+  
+        const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: body,
+        });
+  
+        //Exiba a seguinte mensagem no componente de mensagem  -> Pedido n˚${id}, foi atualizado com sucesso!
+        //Faça ele desaparecer depois de 3 segundos
+        console.log("SUCESSO STATUS ATUALIZADO");
+      },
     },
     mounted() {
       this.consultarPedidos();
-    //   this.consultarListaStatus();
+      this.consultarListaStatus();
     },
   };
   </script>
@@ -145,7 +177,7 @@
   }
   
   select {
-    padding: 12px;
+    padding: 2px;
     width: 110px;
     border: #222 solid 1px;
     border-radius: 8px;

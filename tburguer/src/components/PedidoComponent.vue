@@ -2,6 +2,7 @@
     <div>
       <div>
         <form id="pedido-form" @submit="criarPedido($event)">
+          <MensagemComponent :msg="msg"/>
           <div>
             <p id="nome-hambuguer-content">
               {{ burguer && burguer.nome ? burguer.nome : "-" }}
@@ -88,10 +89,12 @@
   
   <script>
 
+  import MensagemComponent from './MensagemComponent.vue';
+
   export default {
     name: "PedidoComponent",
     components: { 
-
+      MensagemComponent
      },
     data() {
       return {
@@ -133,6 +136,10 @@
           statusId: 6,
           hamburguer: this.burguer,
         };
+
+        //Verificar se nome, ponto estão peenchidos,
+        // caso contrário não deixe salvar o pedido 
+        //e exiba uma mensagem de erro falando que o nome e ponto são obrigatórios.
   
         const dadosPedidoJson = JSON.stringify(dadosPedido);
   
@@ -141,18 +148,14 @@
           headers: { "Content-Type": "application/json" },
           body: dadosPedidoJson,
         });
-  
-        this.msg = "Pedido realizado com sucesso!";
-        this.scrollParaMensagem();
-  
-        this.nomeCliente = null;
-        this.idPontoCarne = null;
-        this.listaBebidasSelecionadas = [];
-        this.listaComplementoSelecionado = [];
-  
+
+        this.msg = "Pedido criado com sucesso!"
+
         setTimeout(() => {
-          this.msg = null;
+          this.msg = ""
         }, 3000);
+
+
       },
       scrollParaMensagem() {
         // Encontrar o elemento usando o ID

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>HOME PAGE</h1>
+    <h1>Configurar Pedido</h1>
     <PedidoComponent :burguer="this.hamburguerSelecionado" />
 
   </div>
