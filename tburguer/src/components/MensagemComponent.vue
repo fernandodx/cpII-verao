@@ -1,5 +1,4 @@
 <template>
-     <!-- Esconda a MSG quando ela for vazia -->
     <div id="msg-container">
         <p>{{ msg }}</p>
     </div>

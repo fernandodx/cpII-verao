@@ -1,8 +1,8 @@
 <template>
     <div id="pedidos-tabela">
-    <!-- Adicione o componente de mensagem ao componente de ListaPedidosComponent -->
-      <div>
-        <div id="pedidos-tabela-cabecalho">
+    <MensagemComponent :msg="msg" v-show="msg"/>      <div>
+      <div v-if="listaPedidosRealizados.length > 0">  
+      <div id="pedidos-tabela-cabecalho">
           <div id="ordem-id">#ID</div>
           <div>Nome</div>
           <div>Hamburguer</div>
@@ -12,14 +12,15 @@
           <div id="div-acoes">Ações</div>
         </div>
       </div>
+      </div>
 
-       <!-- Quando não tiver nenhum pedido, somente o o componente de msg é exibido falando que nenhum pedido foi realizado. -->
-       <!-- Quando tiver pedido, a lista com cabeçalho é escondida -->  
-       <div
+      <div v-if="listaPedidosRealizados.length === 0">
+      <p id="msgnegativa">Nenhum pedido realizado até o momento!</p>
+      </div>
+        <div
         id="pedidos-tabela-linhas"
         v-for="pedido in listaPedidosRealizados"
-        :key="pedido.id"
-      >
+        :key="pedido.id">
         <div class="pedidos-tabela-linha">
           <div id="ordem-numero">{{ pedido.id }}</div>
           <div>{{ pedido.nome }}</div>
@@ -79,17 +80,18 @@
   </template>
   
   <script>
-
+  import MensagemComponent from './MensagemComponent.vue';
   
   export default {
     name: "ListaPedidosComponent",
     components: {
-   
+      MensagemComponent
     },
     data() {
       return {
         listaPedidosRealizados: [],
         listaStatusPedido: [],
+        msg: null
       };
     },
     methods: {
@@ -106,10 +108,8 @@
         const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
           method: "DELETE",
         });
-  
-        //Exiba a seguinte mensagem no componente de mensagem  -> Pedido n˚${id}, foi cancelado com sucesso!
-        //Faça ele desaparecer depois de 3 segundos
-  
+        this.msg = `Pedido n˚${id}, foi cancelado com sucesso!`;
+        setTimeout(() => this.msg = "", 3000);
         this.consultarPedidos();
       },
       async atualizarStatusPedido(event, id) {
@@ -122,10 +122,8 @@
           headers: { "Content-Type": "application/json" },
           body: body,
         });
-  
-        //Exiba a seguinte mensagem no componente de mensagem  -> Pedido n˚${id}, foi atualizado com sucesso!
-        //Faça ele desaparecer depois de 3 segundos
-        console.log("SUCESSO STATUS ATUALIZADO");
+        this.msg = `Pedido n˚${id}, foi atualizado com sucesso!`;
+        setTimeout(() => this.msg = "", 3000);
       },
     },
     mounted() {
@@ -210,6 +208,12 @@
     width: 100%;
     height: 2px;
     background-color: darkgoldenrod;
+  }
+
+  #msgnegativa{
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 40px;
   }
   </style>
   

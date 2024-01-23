@@ -1,7 +1,7 @@
 <template>
     <div>
         <footer id="footer">
-            <p>Construido por Fernando Dias de Souza &copy; 2024</p>
+            <p>Desenvolvido por <a href="http://instagram.com/laionstanczyk" target="_blanck">Laion Stanczyk</a> &copy; 2024</p>
         </footer>
     </div>
 </template>
@@ -23,9 +23,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-
 }
 
+footer a{
+	color: #fff;
+}
 
+footer a:hover{
+	color: #00bcd4;
+}
 </style>

@@ -2,7 +2,7 @@
     <div>
       <div>
         <form id="pedido-form" @submit="criarPedido($event)">
-          <MensagemComponent :msg="msg"/>
+          <MensagemComponent :msg="msg" v-show="msg"/>
           <div>
             <p id="nome-hambuguer-content">
               {{ burguer && burguer.nome ? burguer.nome : "-" }}
@@ -90,11 +90,10 @@
   <script>
 
   import MensagemComponent from './MensagemComponent.vue';
-
   export default {
     name: "PedidoComponent",
     components: { 
-      MensagemComponent
+      MensagemComponent,
      },
     data() {
       return {
@@ -125,8 +124,13 @@
         this.listaBebidas = data.bebidas;
         console.log(data);
       },
-      async criarPedido(e) {
+        async criarPedido(e) {
         e.preventDefault();
+        if (!(this.nomeCliente && this.pontoCarneSelecionado)){
+          this.msg = "NOME e PONTO DA CARNE são campos obrigatórios! Favor os preencha.";
+          setTimeout(() => this.msg = "", 3000);
+          return;
+        }
   
         const dadosPedido = {
           nome: this.nomeCliente,
@@ -136,11 +140,6 @@
           statusId: 6,
           hamburguer: this.burguer,
         };
-
-        //Verificar se nome, ponto estão peenchidos,
-        // caso contrário não deixe salvar o pedido 
-        //e exiba uma mensagem de erro falando que o nome e ponto são obrigatórios.
-  
         const dadosPedidoJson = JSON.stringify(dadosPedido);
   
         const req = await fetch("http://localhost:3000/pedidos", {
@@ -148,14 +147,9 @@
           headers: { "Content-Type": "application/json" },
           body: dadosPedidoJson,
         });
-
-        this.msg = "Pedido criado com sucesso!"
-
-        setTimeout(() => {
-          this.msg = ""
-        }, 3000);
-
-
+        const res = await req.json();
+        this.msg = `Pedido n˚ ${res.id} gerado!`;
+        setTimeout(() => this.msg = "", 3000);
       },
       scrollParaMensagem() {
         // Encontrar o elemento usando o ID
@@ -218,7 +212,7 @@
   
   input,
   select {
-    padding: 12px;
+    padding: 6px;
     width: 300px;
     border: #222 solid 1px;
     border-radius: 8px;
