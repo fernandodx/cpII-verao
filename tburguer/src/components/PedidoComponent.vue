@@ -149,7 +149,12 @@
         });
         const res = await req.json();
         this.msg = `Pedido n˚ ${res.id} gerado!`;
-        setTimeout(() => this.msg = "", 3000);
+        setTimeout(() => {
+          this.msg = "";
+          this.nomeCliente = null;
+          this.pontoCarneSelecionado = "";
+          this.listaBebidasSelecionadas = [];
+          this.listaComplementoSelecionado = [];},3000);
       },
       scrollParaMensagem() {
         // Encontrar o elemento usando o ID
