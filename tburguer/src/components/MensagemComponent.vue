@@ -1,6 +1,6 @@
 <template>
-     <!-- Esconda a MSG quando ela for vazia -->
-    <div id="msg-container">
+     <!-- Esconda a MSG quando ela for vazia - OK -->
+    <div v-if="teste()" id="msg-container">
         <p>{{ msg }}</p>
     </div>
 </template>
@@ -14,6 +14,15 @@
         computed: {
             existeMsg(){
                 return this.msg !== "" && this.msg !== null && this.msg !== undefined;
+            }
+        },
+        methods: {
+            teste(){
+                if(!this.msg) {
+                   return false;
+                }else{
+                    return true;
+                }
             }
         }
     }
@@ -29,7 +38,8 @@
         color: darkcyan;
         border-radius: 8px;
         border: dotted 3px darkcyan;
-        box-shadow: 6px 6px 15px 0px gray;
+        box-shadow: 6px 6px 15px 0px gray
+
     }
 
 
