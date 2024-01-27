@@ -140,6 +140,11 @@
         //Verificar se nome, ponto estão peenchidos,
         // caso contrário não deixe salvar o pedido 
         //e exiba uma mensagem de erro falando que o nome e ponto são obrigatórios.
+
+        if (!dadosPedido.nome || !dadosPedido.ponto) {
+          this.msg = "O nome e o ponto são obrigatórios!";
+          return;
+        }
   
         const dadosPedidoJson = JSON.stringify(dadosPedido);
   
@@ -150,6 +155,11 @@
         });
 
         //Limpar os campos após o cadastro do pedido
+
+        this.nomeCliente = "";
+        this.pontoCarneSelecionado = "";
+        this.listaBebidasSelecionadas = [];
+        this.listaComplementoSelecionado = [];
 
         this.msg = "Pedido criado com sucesso!"
 

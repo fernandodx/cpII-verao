@@ -80,54 +80,60 @@
   
   <script>
 
-  
+  import MensagemComponent from './MensagemComponent.vue';  
+
   export default {
     name: "ListaPedidosComponent",
     components: {
-   
+      MensagemComponent
     },
     data() {
       return {
         listaPedidosRealizados: [],
         listaStatusPedido: [],
+        mostrarMsgNenhumPedido: false,
+        msgNenhumPedido: "Nenhum pedido foi realizado.",
       };
     },
     methods: {
-      async consultarPedidos() {
-        const response = await fetch("http://localhost:3000/pedidos");
-        this.listaPedidosRealizados = await response.json();
-        console.log(this.listaPedidosRealizados);
+        async consultarPedidos() {
+          const response = await fetch("http://localhost:3000/pedidos");
+          this.listaPedidosRealizados = await response.json();
+          this.mostrarMsgNenhumPedido = this.listaPedidosRealizados.length === 0;
+        },
+        async consultarListaStatus() {
+          const response = await fetch("http://localhost:3000/status_pedido");
+          this.listaStatusPedido = await response.json();
+        },
+        async deletarPedido(id) {
+          const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
+            method: "DELETE",
+          });
+
+    
+          const mensagem = `Pedido n˚${id}, foi cancelado com sucesso!`;
+          this.$emit("exibir-mensagem", mensagem);
+
+          this.consultarPedidos();
+        },
+        async atualizarStatusPedido(event, id) {
+          const idPedidoAtualizado = event.target.value;
+
+          const body = JSON.stringify({ statusId: idPedidoAtualizado });
+
+          const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: body,
+          });
+
+          
+          const mensagem = `Pedido n˚${id}, foi atualizado com sucesso!`;
+          this.$emit("exibir-mensagem", mensagem);
+
+          console.log("SUCESSO STATUS ATUALIZADO");
+        }
       },
-      async consultarListaStatus() {
-        const response = await fetch("http://localhost:3000/status_pedido");
-        this.listaStatusPedido = await response.json();
-      },
-      async deletarPedido(id) {
-        const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
-          method: "DELETE",
-        });
-  
-        //Exiba a seguinte mensagem no componente de mensagem  -> Pedido n˚${id}, foi cancelado com sucesso!
-        //Faça ele desaparecer depois de 3 segundos
-  
-        this.consultarPedidos();
-      },
-      async atualizarStatusPedido(event, id) {
-        const idPedidoAtualizado = event.target.value;
-  
-        const body = JSON.stringify({ statusId: idPedidoAtualizado });
-  
-        const response = await fetch(`http://localhost:3000/pedidos/${id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: body,
-        });
-  
-        //Exiba a seguinte mensagem no componente de mensagem  -> Pedido n˚${id}, foi atualizado com sucesso!
-        //Faça ele desaparecer depois de 3 segundos
-        console.log("SUCESSO STATUS ATUALIZADO");
-      },
-    },
     mounted() {
       this.consultarPedidos();
       this.consultarListaStatus();
